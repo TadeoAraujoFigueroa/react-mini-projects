@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -12,7 +12,11 @@ function App() {
   const [users, setUsers] = useState([])
   const [selectedUser, setSelectedUser] = useState(null)
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+      loadUsers();
+    }, []);
 
   async function loadUsers(){
   try 
@@ -23,7 +27,6 @@ function App() {
 
     if(!response.ok)
     {
-      setError(true)
       throw new Error("Fallo en el fetch");
     }
 
@@ -31,39 +34,36 @@ function App() {
 
     setUsers(data);
 
-    setLoading(false);
-
   }
   catch(error)
   {
-    setError(true);
+    setError("Error al cargar usuarios");
     console.log("ERROR: " + error);
-  }}
+  }
+  finally{
+    setLoading(false);
+  }
+}
 
   return (
    <div>    
     <h1>Users App</h1>
 
-    <button onClick = {loadUsers}>
-      Cargar Usuarios
-    </button>
-
-    { Array.isArray(users) && (
-      <UserList users = {users} onSelect = {setSelectedUser}/> 
+    { loading ? (
+      <h2>Cargandooo...</h2>
+    ) : (
+      <UserList users = {users} onSelect = {setSelectedUser}/>
     )}
-    
+
 
     { selectedUser && (
       <UserDetail selectedUser = {selectedUser}/>
     )}
 
-    { loading &&
-    (
-      <h3>CARGANDO...</h3>
-    )}
+   
     {
       error && (
-        <h3>ERROR EN LA CARGA</h3>
+        <p>{error}</p>
       )
     }
 

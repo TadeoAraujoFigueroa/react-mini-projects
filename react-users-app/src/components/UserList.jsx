@@ -2,7 +2,7 @@ function UserList({ users, onSelect }) {
   return (
     <ul> 
       {users.map(user => (
-        <li key={user.id} onClick={() => onSelect(user)}>
+        <li className = "styleChange" key={user.id} onClick={() => onSelect(user)}>
           {user.name}
         </li>
       ))}

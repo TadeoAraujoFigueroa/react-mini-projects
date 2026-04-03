@@ -112,4 +112,6 @@ code {
 
 .styleChange {
   color: gold;
+  margin: 10px;
+  text-align: lefts;
 }
