@@ -1,10 +1,15 @@
-function UserList({ users, onSelect }) {
+import UserItem from "./UserItem"
+
+function UserList({ users, onSelect, selectedUser}) {
   return (
-    <ul> 
+    <ul className = "user-list"> 
       {users.map(user => (
-        <li className = "styleChange" key={user.id} onClick={() => onSelect(user)}>
-          {user.name}
-        </li>
+        <UserItem
+         user = {user} 
+         key = {user.id} 
+         onSelect = {onSelect} 
+         isSelected = {selectedUser != null ? user.id === selectedUser.id : false}
+         />
       ))}
     </ul>
   );

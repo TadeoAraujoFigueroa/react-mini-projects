@@ -6,6 +6,7 @@ import './App.css'
 import './components/UserList'
 import UserList from './components/UserList'
 import UserDetail from './components/UserDetai'
+import QuitSelectedUser from "./components/QuitSelectedUser"
 
 function App() {
 
@@ -46,28 +47,38 @@ function App() {
 }
 
   return (
-   <div>    
-    <h1>Users App</h1>
-
-    { loading ? (
-      <h2>Cargandooo...</h2>
-    ) : (
-      <UserList users = {users} onSelect = {setSelectedUser}/>
-    )}
-
-
-    { selectedUser && (
-      <UserDetail selectedUser = {selectedUser}/>
-    )}
+   <div className = "App">    
 
    
-    {
-      error && (
-        <p>{error}</p>
-      )
-    }
+      <h1 className = "app-title">Users App</h1>
+   
+    
 
-   </div>
+    
+
+    { loading ? (
+      <p className ="status-message">Cargandooo...</p>
+    ) : error ? (
+      <p className = "status-message error">{error}</p>
+    ) :
+      (
+    <div className = "main-content">
+      <div className ="panel list-panel">
+        <h2 className = "panel-title">Lista de Usuarios</h2>
+
+            <UserList users = {users} onSelect = {setSelectedUser} selectedUser = {selectedUser}/>
+      </div>  
+      <div className = "panel detail-panel">
+        <h2 className = "panel-title">Detalle de usuario</h2>
+
+            <UserDetail user = {selectedUser}/>
+            <QuitSelectedUser onSelect = {setSelectedUser} />
+      </div>
+
+    </div>
+       ) }
+    
+    </div>
   )
 }
 
