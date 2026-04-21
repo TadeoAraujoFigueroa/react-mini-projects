@@ -1,11 +1,12 @@
 * {
   box-sizing: border-box;
 }
+/* FONDO */
 
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #eef4f8;
+  background-color: rgb(193, 255, 193);
   color: #1f2937;
 }
 
@@ -16,23 +17,48 @@ body {
 .app {
   min-height: 100vh;
   padding: 40px 24px;  
+  background-color: rgb(193, 255, 193);
 }
 
-.app-title {
-  text-align: center;
-  margin-bottom: 40px;
-  font-size: 2.5rem;
-}
+
+/* FIN FONDO */
+
+/* CONTENEDORES PRINCIPALES */
 
 .main-content {
-  max-width: 1100px;
+  
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 24px;
-  justify-content: center;
-  align-items: center;
+  padding: 50px;
+  background-color: rgb(193, 255, 193);
 }
 
+.submain-content{
+  max-width: 2000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: 50px;
+}
+
+
+.form-container{
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: lightyellow;
+  gap: 50px;
+  margin: 0 auto;
+  width: 450px;
+  height: 600px;
+  border: 1px solid black;
+
+}
 .panel {
   background: white;
   border-radius: 16px;
@@ -45,20 +71,48 @@ body {
   width: 450px;
   display: flex;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
+  gap: 10px;
 }
 
 .detail-panel {
   width: 450px;
   display: flex;
   flex-direction: column;
-  min-height: 200px;
+  align-items: center;
+ 
 }
 
-.panel-title {
-  margin-top: 0;
+.right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;     /* vertical */
+}
+
+.list-wrapper{
+  display: flex;
+  align-items:stretch;
+}
+
+
+/* FIN CONTENEDORES PRINCIPALES */
+
+/* LISTA DE USUARIOS */
+
+.list-counter {
+  margin-top: 0px;
   margin-bottom: 20px;
-  font-size: 1.25rem;
+  font-size: 0.75rem;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-width: 5;
 }
 
 .user-list {
@@ -86,6 +140,10 @@ body {
   font-weight: bold;
 }
 
+/* FIN LISTA DE USUARIOS */
+
+/* DETALLE USUARIOS */
+
 .user-detail h3 {
   margin-top: 0;
   margin-bottom: 18px;
@@ -97,10 +155,10 @@ body {
   font-size: 1rem;
 }
 
-.empty-message {
-  color: #6b7280;
-  font-style: italic;
-}
+
+/* FIN DETALLE USUARIOS */
+
+/* BOTONES */
 
 .clear-btn {
   align-self: center;
@@ -115,15 +173,134 @@ body {
   transition: background-color 0.2s ease;
 }
 
-.clear-btn:hover {
+.reload-btn {
+  margin: 0 auto;
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.reload-btn:hover,
+.clear-btn:hover{
   background: #1d4ed8;
 }
 
+.reload-btn-container{
+  display: flex;
+  justify-content: center;
+}
+
+/* FIN BOTONES */
+
+/* ERROR Y LOADING */
+
+.empty-message {
+  color: #6b7280;
+  font-style: italic;
+}
+
+
 .status-message {
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 3.5rem;
+  font-family:fantasy;
 }
 
 .status-message.error {
   color: #b91c1c;
 }
+
+.loading-error-container
+{
+  margin: 0 auto;
+  background-color: rgb(193, 255, 193);
+
+}
+
+/* FIN ERROR Y LOADING */
+
+/* FAKE AVATAR */
+
+.fake-avatar-logo{
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 10px 5px;
+  background-color: lightgreen;
+}
+
+.unfake-avatar-logo{
+  width: 100px;
+  height: 50px;
+  border-radius: 30px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 0.5rem;
+  text-align: center;
+  padding: 20px 5px;
+  background-color: lightgreen;
+}
+
+.fake-avatar-logo,
+.unfake-avatar-logo {
+  align-self: flex-end;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.fake-avatar-logo:hover,
+.unfake-avatar-logo:hover{
+  background-color: rgb(46, 224, 46);
+  transform: translateY(2px)
+}
+
+
+.avatar-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+/* FIN FAKE AVATAR */
+
+/* TITULO */
+
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.25rem;
+}
+
+
+.app-title {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 2.5rem;
+  font-family:fantasy;
+  height: 50px;
+}
+
+/* FIN TITULO */
+
+/* INPUT */
+
+.search-input {
+  display: block;
+  margin: 0 auto 20px;
+  padding: 10px 14px;
+  width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+
+
+

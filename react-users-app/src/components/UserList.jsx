@@ -1,6 +1,9 @@
 import UserItem from "./UserItem"
 
 function UserList({ users, onSelect, selectedUser}) {
+  if(users.length === 0) return (
+    <p>NO EXISTEN USUARIOS QUE CUMPLAN CON LA BÚSQUEDA</p>
+  )
   return (
     <ul className = "user-list"> 
       {users.map(user => (
