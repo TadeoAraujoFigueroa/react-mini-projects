@@ -22,7 +22,6 @@ function App() {
     city: "",
   })
 
-
   const filteredUsers = users.filter(user =>
   user.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -37,6 +36,22 @@ function App() {
         }
     }, [filteredUsers, selectedUser]);
 
+  useEffect(() => {
+    if(selectedUser)
+      {
+        setFormData({
+          name: selectedUser.name,
+          email: selectedUser.email,
+          city: selectedUser.address.city
+        });
+      } else {
+      setFormData({
+          name: "",
+          email: "",
+          city: ""
+      })
+    }
+  }, [selectedUser])
   /* 
   Función onChange general para todos los inputs que permite establecer el nuevo usuario cuyos datos se van completando
   A medida que se escriben los campos, se va seteando el estado, siempre basandose en el estado previo.
@@ -50,44 +65,90 @@ function App() {
       [name]: value
   }))}
 
+  function handleUpdateUser(updatedUser) {
+  setUsers((prev) =>
+    prev.map(user =>
+      user.id === updatedUser.id ? updatedUser : user
+    )
+  );
+
+  setSelectedUser(updatedUser);
+}
+  
+
   // Evita que se recargue la página al cargar el formulario
   function handleSubmit(e){
-    e.preventDefault();
+    try{
 
-    const trimmedData = {
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      city: formData.city.trim(),
-    };
+        e.preventDefault();
 
-    if (!trimmedData.name || !trimmedData.email || !trimmedData.city) {
-      setError("Completá nombre, email y ciudad para agregar un usuario");
-      return;
+        const trimmedData = {
+              name: formData.name.trim(),
+              email: formData.email.trim(),
+              city: formData.city.trim()
+        }
+
+        if(!trimmedData.name || !trimmedData.email || !trimmedData.city)
+          { throw new Error("Invalid format, some keys are empty");}
+
+      if(selectedUser){
+
+        const updatedUser = {
+          id: selectedUser.id,
+          name: trimmedData.name,
+          email: trimmedData.email,
+          address:
+          {
+            city: trimmedData.city
+          },
+          company:
+          {
+            name: selectedUser.company.name
+          }
+        }
+        handleUpdateUser(updatedUser);
+
+      } else {
+     
+                    const newUser = {
+                      id: Date.now(),
+                      name: trimmedData.name,
+                      email: trimmedData.email,
+                      address:
+                      {
+                        city: trimmedData.city
+                      },
+                      company: {
+                        name: "Ninguna companía especificada"
+                      }
+                      }
+
+                      setUsers((prevUsers) => [newUser, ...prevUsers]);
+                      setSelectedUser(newUser);           
+              }   
+      setError(null);
+      setSearch("");
+        
     }
-
-    const newUser = {
-      id: Date.now(),
-      name: trimmedData.name,
-      email: trimmedData.email,
-      address: {
-        city: trimmedData.city,
-      },
-      company: {
-        name: "Empresa no especificada",
-      },
-    };
-
-    setUsers((prevUsers) => [newUser, ...prevUsers]);
-    setSelectedUser(newUser);
-    setError(null);
-    setSearch("");
-    setFormData({
-      name: "",
-      email: "",
-      city: "",
-    });
+    catch(error)
+    {
+      setError("Fallo al cargar usuario")
+      console.log(error);
+    }
+   
   }
+  function handleDeleteUser(id)
+  {
+    setUsers((prev) => (
+      prev.filter(user => user.id !== id)
+    ));
 
+    if(selectedUser && selectedUser.id === id)
+      {
+        setSelectedUser(null);
+
+      }
+  }
   async function loadUsers(){
   try 
   {
@@ -162,7 +223,8 @@ function App() {
         </div>
    
       </div>
-      <AddUserForm onAddForm = {handleChange} onSubmit = {handleSubmit} value = {formData}/>
+      <AddUserForm onChange = {handleChange} onSubmit = {handleSubmit} formData = {formData} 
+                    onDelete = {handleDeleteUser} selectedUser = {selectedUser}/>
       <div className = "reload-btn-container">
         { !loading && (
           <button className = "reload-btn" onClick = {() => loadUsers()}>
