@@ -2,8 +2,8 @@ function AddUserForm({ onChange, onSubmit, formData, onDelete, selectedUser })
 {
     return(
     <form className = "form-container" onSubmit = {onSubmit}>
-        <h2 className = "app-title">
-            {selectedUser ? "editar usuario" : "agregar usuario"}
+        <h2 className = "form-title">
+            {selectedUser ? "EDITAR USUARIO" : "AGREGAR USUARIO"}
         </h2>
         <input
         type="text"
@@ -29,11 +29,11 @@ function AddUserForm({ onChange, onSubmit, formData, onDelete, selectedUser })
         onChange={onChange}
         className = "search-input"
         />
-       <button type="submit" className = "reload-btn">
-            {selectedUser ? "EDITAR USUARIO" : "CREAR USUARIO"}
+       <button type="submit" className = "charge-btn">
+            {selectedUser ? "Editar usuario" : "Crear usuario"}
         </button>
-        {selectedUser &&  <button type ="button" className = "reload-btn" onClick = {() => onDelete(selectedUser.id)}>
-            ELIMINAR USUARIO
+        {selectedUser &&  <button type ="button" className = "delete-btn" onClick = {() => onDelete(selectedUser.id)}>
+            Eliminar
         </button>}
          
     </form>
